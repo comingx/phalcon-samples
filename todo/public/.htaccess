@@ -1,0 +1,20 @@
+AddDefaultCharset UTF-8
+
+# Rewrite *.php, unexist direcotries and files to index.php
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f [OR]
+    RewriteCond %{REQUEST_FILENAME} ^(.+)\.php$
+    RewriteRule ^(.*)$ index.php?_url=/$1 [QSA,L]
+</IfModule>
+
+# Don't Rewrite css/js/jpg/png, exist directories and files
+#<IfModule mod_rewrite.c>
+#    RewriteEngine On
+#    RewriteCond %{REQUEST_FILENAME} -d [OR]
+#    RewriteCond %{REQUEST_FILENAME} -s
+#    RewriteCond %{REQUEST_FILENAME} .*\.(css|js|jpg|png)$
+#    RewriteRule ^.*$ - [NC,L]
+#    RewriteRule ^(.*)$ index.php?_url=/$1 [QSA,L]
+#</IfModule>
