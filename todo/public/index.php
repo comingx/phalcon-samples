@@ -25,7 +25,7 @@ try {
      */
     $di->setShared('url', function () {
         $url = new \Phalcon\Mvc\Url();
-        $url->setBaseUri("http://www.todo.com/");
+        $url->setBaseUri("/");
 
         return $url;
     });
