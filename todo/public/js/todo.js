@@ -1,4 +1,5 @@
 $(".events").on("click", ".content-wrapper", function (evt) {
+    // 获取event div元素
     var eventEle = $(this).parent().parent();
     $(".event").removeClass("active");
     $(eventEle).addClass("active");
@@ -31,35 +32,41 @@ $(".events").on("click", ".save-btn", function (evt) {
 
 $(".events").on('click', '.done-btn', function (evt) {
     var eventEle = $(this).parent().parent().parent().parent();
-    $(eventEle).addClass("done");
     evt.stopPropagation();
     $.post(
         '/index/status',
         {"id": parseInt($(eventEle).attr("data-id")), "status": 1},
-        function () {
+        function (data, status) {
+            if (!data.hasOwnProperty("errcode")) {
+                $(eventEle).addClass("done");
+            }
         }
     );
 });
 
 $(".events").on("click", ".undone-btn", function (evt) {
     var eventEle = $(this).parent().parent().parent().parent();
-    $(eventEle).removeClass("done");
     evt.stopPropagation();
     $.post(
         '/index/status',
         {"id": parseInt($(eventEle).attr("data-id")), "status": 0},
-        function () {
+        function (data, status) {
+            if (!data.hasOwnProperty("errcode")) {
+                $(eventEle).removeClass("done");
+            }
         }
     );
 });
 
 $(".events").on("click", ".delete-btn", function (evt) {
     var eventEle = $(this).parent().parent().parent();
-    $(eventEle).fadeOut();
     $.post(
         '/index/delete',
         {"id": parseInt($(eventEle).attr("data-id"))},
-        function () {
+        function (data, status) {
+            if (!data.hasOwnProperty("errcode")) {
+                $(eventEle).fadeOut();
+            }
         }
     );
 
@@ -95,6 +102,7 @@ $("#addEventBtn").click(function (evt) {
                 '</div>' +
                 '</div>' +
                 '</div>';
+            // 添加一个事件元素到events div的第1个子元素之后
             $(".events > div:nth-child(1)").after(template);
             $(".add-event textarea").val("");
         }

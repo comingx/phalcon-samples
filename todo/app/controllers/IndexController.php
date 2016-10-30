@@ -48,8 +48,11 @@ class IndexController extends Controller
         $status = $this->request->getPost("status");
         $event = Event::findFirstById($id);
         $event->status = $status;
-        $event->save();
-        echo json_encode(array("success" => 1));
+        if ($event->save()) {
+            echo json_encode(array("success" => 1));
+        } else {
+            echo json_encode(array("errcode" => 500, 'message' => "状态更改失败"));
+        }
     }
 
     public function deleteAction()
@@ -57,8 +60,12 @@ class IndexController extends Controller
         $this->view->setRenderLevel(View::LEVEL_NO_RENDER);
         $id = $this->request->getPost("id");
         $event = Event::findFirstById($id);
-        $event->delete();
-        echo json_encode(array("success" => 1));
+        if ($event->delete()) {
+            echo json_encode(array("success" => 1));
+        } else {
+            echo json_encode(array("errcode" => 500, 'message' => "删除失败"));
+        }
+
     }
 
 }
