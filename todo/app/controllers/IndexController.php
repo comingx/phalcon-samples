@@ -13,8 +13,7 @@ class IndexController extends Controller
 {
     public function indexAction()
     {
-        $event = new Event();
-        $this->view->events = $event::find(array('order' => 'id DESC'));
+        $this->view->events = Event::find(array('order' => 'id DESC'));
     }
 
     public function saveAction()
