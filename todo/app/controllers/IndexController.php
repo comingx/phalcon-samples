@@ -33,6 +33,8 @@ class IndexController extends Controller
             $result = $event->save();
         }
 
+        $this->response->setContentType('application/json');
+
         if ($result) {
             echo json_encode(array("success" => 1, 'id' => $event->id));
         } else {
@@ -47,6 +49,7 @@ class IndexController extends Controller
         $status = $this->request->getPost("status");
         $event = Event::findFirstById($id);
         $event->status = $status;
+        $this->response->setContentType('application/json');
         if ($event->save()) {
             echo json_encode(array("success" => 1));
         } else {
@@ -59,6 +62,7 @@ class IndexController extends Controller
         $this->view->setRenderLevel(View::LEVEL_NO_RENDER);
         $id = $this->request->getPost("id");
         $event = Event::findFirstById($id);
+        $this->response->setContentType('application/json');
         if ($event->delete()) {
             echo json_encode(array("success" => 1));
         } else {
