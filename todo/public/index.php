@@ -4,8 +4,6 @@
  * Phalcon Quick Start - ToDo Sample
  * @author: Jingle|ComingX
  */
-
-
 use Phalcon\Di\FactoryDefault;
 
 error_reporting(E_ALL);
@@ -38,6 +36,7 @@ try {
         $view->setDI($this);
         // 设置视图文件根目录
         $view->setViewsDir(APP_PATH . '/views/');
+        $view->setMainView('layouts/main');
         // 注册volt和php视图引擎
         $view->registerEngines([
             '.volt' => function ($view) {
